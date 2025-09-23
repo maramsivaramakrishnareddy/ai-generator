@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Post Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>AI Post Generator</h2>
+
+        <!-- Input & Button -->
+        <input type="text" id="newpost" placeholder="Enter topic name" />
+        <button onclick="getPost()">Generate Post</button>
+
+        <!-- Output -->
+        <p id="li-post"></p>
+    </div>
+
+    <script>
+        function getPost() {
+            const topicName = document.getElementById('newpost').value;
+
+            fetch('http://127.0.0.1:8000/generatePost', {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ topic: topicName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("Error: " + JSON.stringify(data));
+                    return;
+                }
+                document.getElementById('li-post').innerText = data.post;
+            })
+            .catch(err => console.error("Error:", err));
+        }
+    </script>
+</body>
+</html>
