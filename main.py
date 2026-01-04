@@ -16,8 +16,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Remote API URL (Groq)
-url = "https://api.groq.com/openai/v1/chat/completions"
+
 
 @app.post("/generatePost")
 async def generatePost(request: Request):
@@ -56,3 +55,4 @@ async def generatePost(request: Request):
 
     except Exception as e:
         return {"error": "Server exception", "details": str(e)}
+
